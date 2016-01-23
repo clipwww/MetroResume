@@ -1,3 +1,6 @@
+p{
+	font-size: 18px;
+}
 body{
 	font-family:微軟正黑體;
 	background-color: #EEDFF0;
@@ -128,9 +131,7 @@ p.content{
 	top:0;
 }
 button#listLink{
-	font-weight: bold;
 	font-size: 24px;
-	border-radius: 0;
 }
 #downBtn{
 	position: fixed;
@@ -155,6 +156,12 @@ button#listLink{
 }
 #upBtn:hover{
 	opacity: 1;
+}
+.btn-block{
+	font-size:22px;
+	font-weight:bold;
+	text-shadow:1px 1px 0 black;
+	border-radius: 0;
 }
 
 @media (max-width: 500px){

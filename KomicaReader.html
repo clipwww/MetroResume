@@ -115,6 +115,16 @@
 		    	}
 		    });
 
+		    var oldText = $("#closeWowE04").text();
+		    $("#closeWowE04").click(function(){
+		    	$("#wowE04").slideToggle(1000,function(){
+		    		if( $(this).is(":hidden") ){
+		    			$("#closeWowE04").text(oldText);
+		    		}else{
+		    			$("#closeWowE04").text("下面這是三小？！煩死了！點擊收起來");
+		    		}
+		    	});
+		    });
 
 			function readKanban(){
 				// find some demo xml - DuckDuckGo is great for this
@@ -212,8 +222,6 @@
 				        var time;
 				        var id;
 				        var komicaHTML="";
-
-				        $("header span").text(title);
 	 
 				        $.each(komica.div, function(i, comData){
 				        	upo = komica.div[i].div;
@@ -224,6 +232,7 @@
 
 					        if( i === 0 ){
 					        	komicaHTML = "<div class=\"row\"><div id='r"+ id +"' class=\"col-sm-12 miniBox\">";
+					        	$("header span").text(title);
 					        }else{
 					        	komicaHTML += "<div id='r"+ id +"' class=\"col-sm-10 miniBox\">";
 					        }
@@ -278,6 +287,7 @@
 
 			function readList(){
 				URL = $(this).attr("name");
+				$("#main").text(" "); 
 
 				var x=0;
 				while(x<2){
@@ -289,8 +299,6 @@
 
 				    var n = URL.indexOf("pixmicat",0);
 					var kanBanUrl = URL.substring(0, n);
-
-					$("#main").text(" "); 
 
 					$.getJSON(listURL, function(data){
 						var list = data.query.results.body.div[1].form.table.tbody;
@@ -320,6 +328,7 @@
 							listHTML = " ";
 					}); //end getJSON
 					URL = URL.replace("page=0","page=1");
+					
 					x++;
 				}//end while
 			}//end function    
@@ -335,7 +344,7 @@
 	<body>
 		<span id="menuIcon" class="glyphicon glyphicon-menu-hamburger"></span>
 		<div id="menu">
-			<a href="KomicaReader.html" ><img src="image/komicaLogo.jpg" alt="Komica" /></a>
+			<a href="KomicaReader.html" ><img src="image/komicaLogo.jpg" alt="Komica" /></a><br/><br/>
 			<ul>
 				<li name="http://2cat.or.tl/~tedc21thc/new/rss.xml">新番捏他</li>
 				<li name="http://2cat.or.tl/~tedc21thc/live/rss.xml">新番實況</li>
@@ -347,13 +356,42 @@
 		</div>
 
 		<header>
-			<span>島民粗乃丸☆</span>
+			<span>粗乃丸❤</span>
 		</header>
 
 		<div id="main" class="container">
 			<div class="row">
-				<div class="col-xs-8 col-xs-offset-2" style="text-align:center">
-					<h1>自我滿足用Komia Reader<h1/>					
+				<div class="col-sm-8 col-sm-offset-2">
+					<h1 style="text-align:center">自我滿足用<br/><strong>KOMICA&nbsp;&nbsp;READER</strong><h1/>
+						<hr style="border:1px solid black"/>
+						<h3>很陽春的K島手機閱讀器☆而且還只能看兩個版</h3><br/>
+						<p><strong>アッー！ 左上角選單（Menu）</strong></p>
+						<ul>
+							<li>
+								<p>
+								&nbsp;&nbsp;&nbsp;<strong>♂</strong> 只有兩個版，因為我比較常逛這兩個版ㄏㄏ
+								</p>
+							</li>
+							<li>
+								<p>
+								&nbsp;&nbsp;&nbsp;<strong>♂</strong> 顯示本串全部圖片各種出包
+								</p>
+							</li>
+							<li>
+								<p>
+								&nbsp;&nbsp;&nbsp;<strong>♂</strong> 預設是K島風格配色，可以切換為深色風格（省電？）
+								</p>
+							</li>
+						</ul>
+						<br/>
+						<button id="closeWowE04" class="btn btn-block btn-info">
+							這是什麼？點擊打開來
+						</button>
+						<div id="wowE04" style="display:none">
+							<img src="image/wowe04.gif" alt="哇E04" style="width:100%"/><br/>
+							<img src="image/wowe043.gif" alt="哇E04" style="width:100%"/><br/>
+							<img src="image/wowe042.gif" alt="哇E04" style="width:100%"/><br/>
+						</div>	
 				</div>
 			</div>
 		</div>
@@ -363,8 +401,7 @@
 		</div>
 
 		<div id="jumpImageS">
-			<button class="btn btn-block btn-danger" 
-				style="font-size:22px;font-weight:bold;text-shadow:1px 1px 0 black">
+			<button class="btn btn-block btn-danger" >
 				<span class="glyphicon glyphicon-remove"></span> 關閉
 			</button>
 			<div></div>
