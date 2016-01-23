@@ -51,6 +51,7 @@
 					var imgSrc = $(this).attr("alt");
 		    		$("#jumpImage img").attr("src",imgSrc);
 		    		$("#jumpImage").fadeIn(500);
+		    		$("body").css("overflow","hidden");
 				}
 			}, "img");
 			$("#jumpImageS button").click(function(){
@@ -78,12 +79,14 @@
 		    		var imgSrc = $(this).parent("a").attr("href");
 		    		$("#jumpImage img").attr("src",imgSrc);
 		    		$("#jumpImage").fadeIn(500);
+		    		$("body").css("overflow","hidden");
 		    		return false;
 		    	}	    	
 		    }, ".miniBox a img");
 
 		    $("#jumpImage").click(function(){
 		    	$("#jumpImage").fadeOut(500);
+		    	$("body").css("overflow","");
 		    });
 
 		    $("#main").on({
@@ -328,7 +331,7 @@
 							listHTML = " ";
 					}); //end getJSON
 					URL = URL.replace("page=0","page=1");
-					
+
 					x++;
 				}//end while
 			}//end function    
