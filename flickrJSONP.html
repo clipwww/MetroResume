@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+		<!--width=device-width為適應各式裝置螢幕大小 initial-scale=1為初始比例-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<!--X-UA-Compatible設置IE兼容模式；有什麼最新的版本IE，就用什麼版本的標準模式。-->
+		<meta name="description" content="MetroResume">
+		<title>Flickr Jsonp Test</title>
+		<link href="css/reset.css" rel="stylesheet"> <!--ResetCSS-->	
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/flickrJSONP.css" rel="stylesheet"><!--自己寫的css要最後一個讀取-->
+		<script src="js/jquery-2.2.0.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script>
+			$(function(){
+				var  mn = $(".navbar");
+				mns = "navbar-fixed-top";
+
+				$(window).scroll(function() {
+					if( $(this).scrollTop() > $('header').height() ) {
+						mn.addClass(mns); //當螢幕滾動下滑距離超過header的長度時就讓導覽列變成固定在頂端
+						$("#main").css("padding-top","100px"); //因為導覽列變成fixed的 所以會多出導覽列的空位 增加間距
+					}else{
+						mn.removeClass(mns);
+						$("#main").css("padding-top","50px");
+					}
+				});
+
+				$("#control span").click(function(){
+					var hei = $("#control").css("height");
+					if( hei === "400px"){
+						$("#control").animate({"height":"40px","width":"40px"},500);
+						$("#control span:eq(0)").attr("class","glyphicon glyphicon-menu-down");				
+					}else{
+						$("#control").animate({"height":"400px","width":"250px"},500);
+						$("#control span:eq(0)").attr("class","glyphicon glyphicon-menu-up");
+					}
+				});
+
+
+				function getPhoto(data){
+					var photoHTML = '<h1>'+ data.title +'</h1><hr/>';
+					$.each(data.items,function(i,photo) {
+						photoHTML += '<div class="image">';
+						photoHTML += '<a href="' + photo.link + '">';
+						photoHTML += '<img src="' + photo.media.m.replace('_m','_s') + '"/>';
+						photoHTML += '</a><br>發佈時間：<br>'+ photo.published +'</div>';	
+					}); // end each
+					$("#photos").prepend(photoHTML);
+				};	
+
+				var flickrUrl = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+				$("#myflickr").click(function(){
+					var searchInfo = {
+						id: "55038205@N03",
+						format: "json"
+					};
+					$.getJSON(flickrUrl, searchInfo, getPhoto);
+				});
+
+				$("#searchBtn").click(function(){
+					var searchInfo = {
+						tags: $("input[name='search']").val(),
+						format: "json"
+					};
+					$.getJSON(flickrUrl, searchInfo, getPhoto);	
+				});
+				
+				$("#clear").click(function(){
+					$("#photos").text("");
+				});
+
+
+			});
+		</script>
+	</head>
+	<body>
+		<header>
+			<span class="glyphicon glyphicon-camera"> </span> FLICKR JSONP TEST
+			<p>練習從flickr api 取得 jsonp格式來利用</p>
+		</header>
+
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navMenu">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">
+						裝飾品導覽列XD
+					</a>
+				</div>	
+				<!--以上為導覽列Header部分；以下為導覽列主體部分-->
+				<div class="collapse navbar-collapse" id="navMenu">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="#" data-toggle="tab">MENU1</a>
+						</li>
+						<li>
+							<a href="#" data-toggle="tab">MENU2</a>
+						</li>
+						<li>
+							<a href="#" data-toggle="tab">MENU3</a>
+						</li>						
+					</ul>				
+				</div>				
+			</div>				
+		</nav>
+
+		<div id="control">
+			<div>
+				<span class="glyphicon glyphicon-menu-up"></span>
+				<span>收起操作欄</span>
+			</div>
+			<hr/>
+			<label>MY FLICKR</label>
+			<button id="myflickr" type="button" class="btn btn-info btn-block">顯示我的Flickr</button>
+			<br/>
+
+			<div class="form-group">
+				<label for="search">SEARCH</label>
+				<input name="search" type="text" id="search" class="form-control" placeholder="找什麼">
+			</div>
+			<button id="searchBtn" class="btn btn-info">送出</button>
+
+			<br/><br/> <button id="clear" class="btn btn-danger btn-block">清空</button>
+		</div>
+
+		<div id="main">
+			<div class="container">
+			 	<div class="row">
+			 		<div class="col-xs-12">
+			 			<div id="flickrBox">
+			 				<h1>Flickr Images</h1><hr/>
+			 				<div id="photos"></div>
+			 			</div>
+			 		</div>
+			 	</div>
+			</div>
+		</div>
+	</body>
+</html>

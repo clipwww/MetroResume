@@ -1,0 +1,74 @@
+body{
+	font-family:微軟正黑體;
+}
+p{
+	font-size:20px;
+}
+body {
+	padding-top: 300px;
+}
+header {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	/*讓header部分固定在頂端；設成fixed後width不會是100%要自己設定*/
+	padding-top:50px;
+	height: 350px;
+	background-image: url(../image/DSC02437.jpg);
+	font-size:50px;
+	text-align: center;
+	font-weight: bold;
+	color:black;
+	text-shadow:2px 2px 0 white;
+	/*用陰影製造假邊框文字的效果*/
+}
+.navbar{
+	border-radius: 0;
+	margin-bottom:0;
+	/*取消掉預設的圓角以及對下面的外間距*/
+}
+#main {
+	position: relative;
+	/*相對位置，沒設置的話會被固定在頂部的header蓋掉*/
+	background-color: #000;
+	padding-top:50px;
+	color:white;
+	min-height: 700px;
+}
+#control{
+	position: fixed;
+	top:55px;
+	right:30px;
+	width:250px;
+	height:400px;
+	padding:5px 10px 5px 10px;
+	font-size:22px;
+	color:white;
+	background-color: rgb(48,48,48);
+	opacity: 0.7;
+	z-index:99999;
+	border-radius: 5px;
+	overflow: hidden;
+}
+#control:hover{
+	opacity: 1;
+}
+#control .btn{
+	font-size: 18px;
+	font-weight: bold;
+	text-shadow:1px 1px 0 black;
+}
+#control span{
+	cursor:pointer;
+}
+.image{
+	display: inline-block;
+	padding:5px;
+	border:1px solid white;
+	margin:0 20px 20px 0;
+	text-align: center;
+}
+.image:hover{
+	opacity: 0.7;
+}
+

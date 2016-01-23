@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+	<head>
+		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+		<!--width=device-width為適應各式裝置螢幕大小 initial-scale=1為初始比例-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<!--X-UA-Compatible設置IE兼容模式；有什麼最新的版本IE，就用什麼版本的標準模式。-->
+		<meta name="description" content="MetroResume">
+		<title>Metro Resume</title>
+		<link href="css/reset.css" rel="stylesheet"> <!--ResetCSS-->	
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/Animate.css" rel="stylesheet">
+		<link href="css/metroResume.css" rel="stylesheet"> <!--自己寫的css要最後一個讀取-->
+		<script src="js/jquery-2.2.0.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				function calcRotationX(rot){
+				   $("#Box1 .boxBig").css("transform", "rotateX("+ rot + "deg)");
+				}//沿著X軸轉動方塊的method
+				function calcRotationY(rot){
+				   $("#Box1 .boxBig").css("transform", "rotateY(" + rot + "deg)");
+				}//沿著Y軸轉動方塊的method
+				
+				$("#skill, #archives").hide();
+				$("#profile").show();
+				$(".nav a").click(function(){
+					var page = $(this).attr("href");
+					$(page).siblings().stop(true,true).addClass("slideOutRight").fadeOut(500,function(){
+						$(this).removeClass("slideOutRight"); //退出動畫完成後刪掉該效果class
+					});
+					$(page).stop(true,true).delay(500).fadeIn();//delay等一下消失的動畫完成
+				});//點擊導覽列切換顯示的區塊
+				
+				function autoBox(){
+					if($("#Box1 .boxBig").attr("style") === "transform: rotateX(90deg);"){
+						calcRotationX(0);
+					}else{
+						calcRotationX(90);
+					}
+				}//執行轉動方塊，如果已經轉過就轉回去
+				
+				auto = setInterval(autoBox,5000);
+				$("#Box1").hover(function(){
+					clearInterval(auto);//暫停自動執行
+					calcRotationX(90);
+					$(this).click(function(){ //點擊時再轉另一面
+						calcRotationY(180);
+					});
+					$(this).dblclick(function(){ //連點兩下時再轉另一面
+						calcRotationX(-90);
+					});			
+				},function(){
+					calcRotationX(0);
+					auto = setInterval(autoBox,5000);
+				});//設定自動地轉動方塊；5000為5秒；當滑鼠移到該方塊上時停止自動轉動；移開則恢復
+				
+				for(var i=2;i<=7;i++){
+					$("#Box"+ i +" .boxBody").hover(
+					//利用閉包（closure）與自行呼叫（Self-invoking）
+						function(id){
+							return function(){
+								$("#Box"+ id +" .boxContent").stop(true).fadeIn(0).animate({top:'0'},500);
+								$("#Box"+ id +" .boxBody").addClass("animated jello");
+							}
+						}(i),
+						function(id){
+							return function(){
+								$("#Box"+ id +" .boxContent").stop(true).animate({top:'175px'},500).fadeOut(0);
+								$("#Box"+ id +" .boxBody").removeClass("animated jello");
+							}
+						}(i)
+					);				
+				}$(".boxContent").fadeOut(0);//讀取時全部隱藏
+
+				$("#skill .boxSmall").hover(
+					function(){
+						$(this).addClass("animated tada");
+					},
+					function(){
+						$(this).removeClass("animated tada");
+					}
+				);//skill頁的磚 滑鼠移到上面時的特效
+
+				$("[name='#lan'], [name='#lic']").hide();
+				closeSpan ="glyphicon glyphicon-folder-close";
+				$("#lan").click(function(){
+					var $spanAttr = $("#lan span:eq(0)");
+					if( $spanAttr.attr("class") === closeSpan ){
+						$spanAttr.attr("class","glyphicon glyphicon-folder-open");
+					}else{
+						$spanAttr.attr("class",closeSpan);
+					}
+					$("[name='#lan']").stop(true).fadeToggle(500);
+				});
+				$("#lic").click(function(){
+					var $spanAttr = $("#lic span:eq(0)");
+					if( $spanAttr.attr("class") === closeSpan ){
+						$spanAttr.attr("class","glyphicon glyphicon-folder-open");
+					}else{
+						$spanAttr.attr("class",closeSpan);
+					}
+					$("[name='#lic']").stop(true).fadeToggle(500);
+				});
+
+				$("#archives .boxSmall").hover(
+					function(){
+						$(this).addClass("animated infinite rubberBand");
+					},
+					function(){
+						$(this).removeClass("animated infinite rubberBand");
+					}
+				);//archives的磚滑鼠移到上面時的特效；infinite為animate.css持續的效果
+
+				var $that = $("a[href='#uhima2014']"); 
+				var $div = $that.children('div');//儲存a的子元素div
+				var $span = $that.children().children('span');//儲存a的子元素的子元素span
+				var $p = $that.children().children('p');//儲存a的子元素的子元素p
+				var oldIcon = $span.attr("class");//儲存a的子元素的子元素p原本的Icon
+				var oldText = $p.text();//儲存a的子元素的子元素p原本的文字
+				$("a[href='#uhima2014']").click(function(e) {
+					e.preventDefault();//停止a的功能
+					var newText = "關閉";
+					if( $("#uhima2014").is(":hidden") ){ //檢查該元素是否隱藏
+						$("#uhima2014").show(0).removeClass("rollOut");
+						$div.removeClass("bgBox").addClass('redBox');
+						$span.attr("class","glyphicon glyphicon-remove");
+						$p.text(newText);
+					}else{
+						$("#uhima2014").slideUp(500).addClass("rollOut");
+						$div.removeClass("redBox").addClass('bgBox');
+						$span.attr("class",oldIcon);
+						$p.text(oldText);
+					}
+				});
+
+				var uhimaImage = new Array();
+				$("#uhima2014 .boxMini").each(function(){ 
+					var num_of_Img =  parseInt($(this).attr("name"));
+					uhimaImage[num_of_Img] = $("<img src=\"image/uhima/" + num_of_Img + ".jpg\">"); //建立新的<img>
+					//載入時先讀取好圖片
+				});
+				$("#uhima2014 .boxMini").click(function(){
+					var num_of_Img = $(this).attr("name");
+					var newImg = uhimaImage[num_of_Img]; 
+					var oldImg = $("#uhimaImg img"); //目前顯示的圖片<img>
+					if(newImg.attr("src") !== oldImg.attr("src")){ 
+					//兩個一樣代表點擊正在顯示的圖片；所以不一樣才執行更換
+						newImg.hide(); //先隱藏新的<img>
+						$("#uhimaImg").prepend(newImg); //將新的<img>插入
+						newImg.fadeIn(500); //顯示新的<img>
+						oldImg.remove(); //移除舊的<img>
+
+						$(this).css({"background-color":"white","box-shadow":"3px 3px 3px inset"});
+						$(this).siblings().css({"background-color":"","box-shadow":""});
+						//被點擊的磚塊變白色，製造內部陰影使他看起來被壓著；兄弟節點（就是其他磚）則取消這些設定
+					}else{
+						oldImg.slideUp(500,function(){
+							oldImg.remove();							
+						});
+						$(this).css({"background-color":"","box-shadow":""});
+					}			
+				});
+
+				$(".boxContent").click(function(){
+					var num_of_this = parseInt($(this).attr("name")); //從name屬性獲取數字，轉換成number型態
+					if( !isNaN(num_of_this) ){ //檢測是否非數字，數字才可以執行
+						$.getJSON( "json/profileData.json", function(data){ //從json檔獲取資訊
+							var title = data[num_of_this].Title;
+							var Content = data[num_of_this].Content;
+							$("#Modal2 .modal-title").text(title); //將Title放入互動框的標題
+							$("#Modal2 .modal-body div").replaceWith(Content); //將Content取代互動框body區塊的div
+						});
+					}
+				});
+
+			});
+		</script>
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top" style="border:0px">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navMenu">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">
+						MetroResume
+					</a>
+				</div>	
+				<!--以上為導覽列Header部分；以下為導覽列主體部分-->
+				<div class="collapse navbar-collapse" id="navMenu">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="#profile" data-toggle="tab">關於我</a>
+						</li>
+						<li>
+							<a href="#skill" data-toggle="tab">技能</a>
+						</li>
+						<li>
+							<a href="#archives" data-toggle="tab">一些實作</a>
+						</li>						
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#" data-toggle="modal" data-target="#aboutModal1">About This</a>
+						</li>
+					</ul>					
+				</div>				
+			</div>				
+		</nav>
+		<!--以上為導覽列；以下為互動視窗內容-->
+		<div class="modal fade" id="aboutModal1"><!--fade為動畫效果-->
+			<div class="modal-dialog modal-lg"> <!--可增加modal-lg（大）或modal-sm（小）-->
+				<div class="modal-content"> 
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><!--右上角的關閉按扭-->
+						</button>
+						<h4 class="modal-title">關於這個</h4>
+					</div>
+					<div class="modal-body">
+						<p>Metro風格試作</p>
+						<p>使用Bootstrap、JQuery、Animate.css</p>
+						<p>有RWD設計</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary btn-block" data-dismiss="modal">確認</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--以上為互動視窗內容；以下為主體區塊-->
+		<div class="mainBox">
+			<div id="profile" class="container-fluid metroBox animated slideInLeft">
+				<div class="row">
+				<!--螢幕大於768px時採用col-sm排版，小於768px時改為col-xs排版-->
+					<div id="Box1" class="col-sm-6 col-xs-8" style="cursor:pointer">
+						<div class="boxBig">
+							<div class="one boxBody blueBox">
+								<br/>
+								<span class="glyphicon glyphicon-user"></span>
+								<p>簡爾廷</p>
+								<img src="image/pepe.jpg"  style="width:60%;border-radius:100px" alt="pepe"/>
+							</div>
+							<div class="two boxBody yelloBox2">
+								<br/><br/>
+								<p>您連續點了兩下！</p>
+								<p>點一下就可以了。</p>
+							</div>
+							<div class="three boxBody bgBox">
+								3
+							</div>
+							<div class="four boxBody blueBox3">
+								<p>簡爾廷</p>
+								<p>男♂</p>
+								<p>1990/3/30生</p>
+								<img class="myPic" src="image/983902.jpg" alt="MyPic" />
+							</div>
+							<div class="five boxBody greenBox3">
+								5
+							</div>
+							<div class="six boxBody blueBox2">
+								<p>簡爾廷</p>
+								<p>男♂</p>
+								<p>1990/3/30生</p>
+								<img class="myPic" src="image/akarin.jpg" alt="Click ME"/>
+							</div>
+						</div>
+					</div>
+					<div id="Box2" class="col-sm-3 col-xs-4">
+						<div class="boxSmall">
+							<div class="boxBody greenBox">
+								<span class="glyphicon glyphicon-calendar"></span>
+								<p>兵役狀況</p>
+								<div name="0" class="boxContent" data-toggle="modal" data-target="#Modal2">
+									<p>免役</p>
+									<p>click to read more</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="Box3" class="col-sm-3 col-xs-4">
+						<div class="boxSmall">
+							<div class="boxBody yelloBox">
+								<span class="glyphicon glyphicon-heart"></span>
+								<p>興趣</p>
+								<div name="1" class="boxContent" data-toggle="modal" data-target="#Modal2">
+									<p>動漫畫</p>
+									<p>電影</p>
+									<p>棒球</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="Box4" class="col-sm-6 col-xs-8">
+						<div class="boxSmall">
+							<div class="boxBody purpleBox">
+								<span class="glyphicon glyphicon-education"></span>
+								<p>學經歷</p>
+								<div name="2" class="boxContent" data-toggle="modal" data-target="#Modal2">
+									<p>東海大學資訊管理碩士</p>
+									<p>東海大學資訊工程學士</p>
+								</div>
+							</div>
+						</div>
+					</div>						
+
+					<div id="Box5" class="col-sm-3 col-xs-4">
+						<div class="boxSmall">
+							<div class="boxBody orangeBox">
+								<span class="glyphicon glyphicon-info-sign"></span>
+								<p>自我介紹</p>
+								<div name="3" class="boxContent" data-toggle="modal" data-target="#Modal2">
+									<p>click to read more</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="Box6" class="col-sm-6 col-xs-8">
+						<div class="boxSmall">
+							<div class="boxBody redBox">
+								<span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;
+								<span class="glyphicon glyphicon-earphone"></span>
+								<p>聯絡資訊</p>
+								<div name="4" class="boxContent" data-toggle="modal" data-target="#Modal2">
+									<p>email：clipwww@gmail.com</p>
+									<p>手機：0925151578</p>
+								</div>
+							</div>
+						</div>		
+					</div>
+					<div id="Box7" class="col-sm-3 col-xs-4">
+						<div class="boxSmall">
+							<div class="boxBody greenBox2">
+								<img src="image/Github.png" alt="GitHubLogo"/>
+								<div class="boxContent">
+									<a href="https://github.com/clipwww" target="_blank">
+										<p>GitHub</p>
+										<p>Click me</p>
+									</a>
+								</div>
+							</div>
+						</div>			
+					</div>
+				</div>
+			</div>
+			
+			<div id="skill" class="container-fluid metroBox animated slideInLeft">
+				<div class="row">
+					<div class="col-sm-6 col-xs-6">
+						<div id="lan" class="boxSmall">
+							<div class="boxBody blueBox3">
+								<span class="glyphicon glyphicon-folder-close"></span>
+								<span class="glyphicon glyphicon-wrench"></span>
+								<p>語言與工具</p>
+							</div>							
+						</div>
+					</div>
+					<div class="col-sm-6 col-xs-6">
+						<div id="lic" class="boxSmall">
+							<div class="boxBody greenBox3">
+								<span class="glyphicon glyphicon-folder-close"></span>
+								<span class="glyphicon glyphicon-check"></span>
+								<p>證照與獎狀</p>
+							</div>							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 col-xs-12">
+							<div name="#lan" class="skillCont" >
+								<h1>語言</h1>
+								<hr/>		
+								<p>HTML</p>
+								<p>CSS</p>
+								<p>JavaScript</p>
+								<p>JQuery</p>
+								<p>Java</p>
+								<p>Servlets</p>
+								<p>JSP</p>
+							</div>
+						</div>
+						<div class="col-sm-6 col-xs-12">
+							<div name="#lan" class="skillCont" >
+								<h1>工具</h1>		
+								<hr/>
+								<p>Eclipse</p>
+								<p>Notepad++</p>
+								<p>Sublime Text2</p>
+								<p>MySQL</p>
+								<p>Xampp</p>
+								<p>PhotoShop6</p>
+								<p>威力導演</p>
+							</div>
+						</div>
+						<div class="col-sm-12 col-xs-12">
+							<div name="#lic" class="skillCont" >
+								<h1>證照與獎狀</h1>
+								<hr/>
+								<p>ERP規劃師、BI軟體應用師、SAP BI商業智能基礎管理師</p>
+								<!--Bootstrap的輪播圖片-->
+								<div id="licCarousel" class="carousel slide" data-ride="carousel">
+									<!-- Indicators -->
+									<ol class="carousel-indicators">
+										<li data-target="#licCarousel" data-slide-to="0" class="active"></li>
+										<li data-target="#licCarousel" data-slide-to="1"></li>
+										<li data-target="#licCarousel" data-slide-to="2"></li>
+										<li data-target="#licCarousel" data-slide-to="3"></li>
+									</ol>
+
+									<!-- Wrapper for slides -->
+									<div class="carousel-inner">
+										<div class="item active">
+											<img src="image/lic/0.jpg" alt="ERP規劃師">
+											<div class="carousel-caption">
+												<p>ERP規劃師</p>
+											</div>
+										</div>
+										<div class="item">
+											<img src="image/lic/1.jpg" alt="BI 軟體應用師">
+											<div class="carousel-caption">
+												<p>BI軟體應用師</p>
+											</div>
+										</div>
+										<div class="item">
+											<img src="image/lic/2.jpg" alt="SAP BI商業智能基礎管理師">
+											<div class="carousel-caption">
+												<p>SAP BI商業智能基礎管理師</p>
+											</div>
+										</div>
+										<div class="item">
+											<img src="image/lic/3.jpg" alt="2012全國慈善科技人文全國網頁設計比賽暨行動App創作比賽-銅獎">
+											<div class="carousel-caption">
+												2012全國慈善科技人文全國網頁設計比賽暨行動App創作比賽-銅獎
+											</div>
+										</div>
+									</div>
+
+									<!-- Controls -->
+									<a class="left carousel-control" href="#licCarousel" data-slide="prev">
+										<span class="glyphicon glyphicon-chevron-left"></span>
+									</a>
+									<a class="right carousel-control" href="#licCarousel" data-slide="next">
+										<span class="glyphicon glyphicon-chevron-right"></span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>			
+				</div>
+			</div>	
+			
+			<div id="archives" class="container-fluid metroBox animated slideInLeft">
+				<div class="row">
+					<div class="col-sm-3 col-xs-4">
+						<div class="boxSmall">
+							<a href="https://goo.gl/t5aYGr" target="_blank">
+								<div class="boxBody bgBox">
+									<span class="glyphicon glyphicon-file"></span>
+									<p>單頁式網頁</p>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div class="col-sm-3 col-xs-4">
+						<div class="boxSmall">
+							<a href="http://clipwww.github.io/rwdTest/index.html" target="_blank">
+								<div class="boxBody bgBox">
+									<span class="glyphicon glyphicon-file"></span>
+									<p>RWD TEMPLATE</p>
+								</div>
+							</a>
+						</div>
+					</div>
+
+					<div class="col-sm-3 col-xs-4">
+						<div class="boxSmall">
+							<a href="#uhima2014">
+								<div class="boxBody bgBox">
+									<span class="glyphicon glyphicon-picture"></span>
+									<p>UHIMA研討會美工設計作品</p>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div id="uhima2014" class="col-sm-12 col-xs-12 animated rollIn">
+						<div class="boxMini yelloBox2" name="0">
+							研討會<br/>海報
+						</div><div class="boxMini yelloBox2" name="1">
+							邀請卡<br/>正反面
+						</div><div class="boxMini yelloBox2" name="2">
+							論文集<br/>封面
+						</div><div class="boxMini yelloBox2" name="3">
+							論文集<br>光碟
+						</div><div class="boxMini yelloBox2" name="4">
+							立牌&amp;<br/>羅馬旗
+						</div><div class="boxMini yelloBox2" name="5">
+							研討會<br/>地圖
+						</div><div class="boxMini yelloBox2" name="6">
+							研討會</br>壁報
+						</div><div class="boxMini yelloBox2" name="7">
+							招生<br/>海報
+						</div>
+						<div id="uhimaImg" class="yelloBox2"></div>
+					</div>
+
+					<div class="col-sm-3 col-xs-4">
+						<div class="boxSmall">
+							<a href="flickrJSONP.html" target="_blank">
+								<div class="boxBody bgBox">
+									<img src="image/FlickrLogo.png" alt="FrLOGO" style="width:32%"/>
+									<p>Flickr API JSONP 試作</p>
+								</div>
+							</a>
+						</div>
+					</div>
+
+					<div class="col-sm-3 col-xs-4">
+						<div class="boxSmall">
+							<a href="KomicaReader.html" target="_blank">
+								<div class="boxBody bgBox">
+									<img src="image/komicaLogo.jpg" alt="FrLOGO" style="border-radius:50%"/>
+									<!--<p>讀取Komica XML的陽春Reader</p>-->
+								</div>
+							</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="Modal2" ><!--fade為動畫效果-->
+			<div class="modal-dialog modal-lg"> <!--可增加modal-lg（大）或modal-sm（小）-->
+				<div class="modal-content"> 
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><!--右上角的關閉按扭-->
+						</button>
+						<h4 class="modal-title" style="text-align: center;font-weight: bold"></h4>
+					</div>
+					<div class="modal-body">
+						<div></div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary btn-block" data-dismiss="modal">確認</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

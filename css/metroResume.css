@@ -1,0 +1,243 @@
+body{
+	background-color:rgba(0,0,0,1);
+	font-family: 微軟正黑體;
+}
+p{
+/*預設的字大小*/
+	font-size: 24px;
+}
+img{
+	width:80%;
+	border-radius:2px;
+}
+.myPic{
+	width:40%;
+	border-radius: 10px;
+}
+.mainBox{ 
+/*主要的區塊；離頂部50px為導覽列預留空間；高度寬度為螢幕的大小*/
+	padding:80px 10px 10px 10px;
+	color: white;
+	overflow:hidden;
+}
+.metroBox{
+/*預設隱藏區塊；最大寬度；置中*/
+	max-width:700px;
+}
+.metroBox .row div[class*="col-"]{
+/*取消bootstrap預設的間距(15px)*/
+	padding:0px;
+}
+.boxBig{
+/*大型Box*/
+	height:350px;
+/*3D旋轉*/
+	-webkit-transform-style: preserve-3d;
+	-webkit-transition: all 1s ease;
+	transform-style: preserve-3d;
+	transition: all 1s ease;
+}
+.boxSmall{
+/*小型Box*/
+	height:175px;
+}
+.boxMini{
+	width:87.5px;
+	height:87.5px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	color:black;
+	padding:10px;
+	border:3px solid black;
+	display: inline-block;
+	cursor:pointer;
+}
+.boxMini:hover{
+	opacity: 0.8;
+}
+#skill .boxSmall, #archives .boxSmall{
+	cursor:pointer;
+}
+.boxBody{
+/*內容區塊*/
+	position:absolute;
+	width:100%;
+	height:100%;
+	padding-top:20px;
+	text-align:center;
+	border:3px solid black;
+}
+.boxBody span{
+	font-size:50px;
+}
+.boxContent{
+	position:absolute;
+	top:175px;
+	padding-top:30px;
+	width:100%;
+	height:100%;
+	font-weight:bold;
+    background:rgba(0,0,0,0.8);
+	cursor:pointer;
+}
+.skillCont{
+	padding:0px 20px 5px 30px;
+}
+#licCarousel{
+/*輪播式圖片區塊的大小*/
+	max-height:500px;
+}
+#licCarousel img{
+/*輪播式圖片*/
+	max-height:500px;
+	max-width:350px;
+	margin:0 auto; /*置中大法*/
+}
+#licCarousel .carousel-caption{
+/*輪播式圖片的文字區塊*/
+	background-color: rgba(0,0,0,0.8);
+}
+#archives a, #profile a{
+	text-decoration:none;
+	color:white;
+}
+#archives a:hover{
+/*滑鼠移到上面時透明度為.8；變更透明度時為1秒的動畫效果*/
+	opacity: 0.8;
+	transition: opacity 1s;
+}
+#uhima2014{
+	display:none;
+}
+#uhimaImg{
+	padding:10px 0 10px 0;
+	border:3px solid black;
+	text-align: center;
+}
+#uhimaImg img{
+	margin:0 auto;
+	max-width:600px;
+}
+#Modal2 p{
+	font-size: 16px;
+}
+#Modal2 .modal-body{
+	background-color: #E5E5E5;
+}
+.blueBox{
+	background-color:#1FAEFF;
+}
+.blueBox2{
+	background-color:#2572EB;
+}
+.blueBox3{
+	background-color:#006AC1;
+}
+.greenBox{
+	background-color:#91D100;
+}
+.yelloBox{
+	background-color:#E1B700;
+}
+.yelloBox2{
+	background-color:#F3B200;
+}
+.purpleBox{
+	background-color:#AA40FF;
+}
+.redBox{
+	background-color:#FF2E12;
+}
+.orangeBox{
+	background-color:#FE7C22;
+}
+.greenBox2{
+	background-color:#199900;
+}
+.greenBox3{
+	background-color:#83BA1F;
+}
+.bgBox{
+	background-color:#00C13F;
+}
+/*以下代表了方塊的6個面*/
+.boxBig .one{
+/*translateZ定義3D轉換，只使用Z軸的值*/
+	-webkit-transform: translateZ(175px);
+	transform: translateZ(175px);	
+}
+.boxBig .two{
+/*rotateX定義沿著X軸的轉換*/
+	-webkit-transform: rotateX(90deg) translateZ(175px);
+	transform: rotateX(90deg) translateZ(175px);	
+}
+.boxBig .three{
+/*rotateY定義沿著Y軸的轉換*/
+	-webkit-transform: rotateY(90deg) translateZ(175px);
+	transform: rotateY(90deg) translateZ(175px);	
+}
+.boxBig .four{
+/*rotateY定義沿著Y軸的轉換*/
+	-webkit-transform: rotateY(180deg) translateZ(175px);
+	transform: rotateY(180deg) translateZ(175px);	
+}
+.boxBig .five{
+/*rotateY定義沿著Y軸的轉換*/
+	-webkit-transform: rotateY(270deg) translateZ(175px);
+	transform: rotateY(270deg) translateZ(175px);	
+}
+.boxBig .six{
+/*rotateX定義沿著X軸的轉換*/
+	-webkit-transform: rotateX(-90deg) translateZ(175px);
+	transform: rotateX(-90deg) translateZ(175px);	
+}
+/*以上代表了方塊的6個面*/
+
+@media (max-width: 500px){
+/*螢幕小於500px時*/
+.boxBig{
+	height:270px;
+}
+.boxSmall{
+	height:135px;
+}
+.boxMini{
+	height:67.5px;
+	width:67.5px;
+	font-size: 12px;
+}
+p, a{
+	font-size:16px;
+}
+.boxBig .one{
+/*translateZ定義3D轉換，只使用Z軸的值*/
+	-webkit-transform: translateZ(135px);
+	transform: translateZ(135px);	
+}
+.boxBig .two{
+/*rotateX定義沿著X軸的轉換*/
+	-webkit-transform: rotateX(90deg) translateZ(135px);
+	transform: rotateX(90deg) translateZ(135px);	
+}
+.boxBig .three{
+/*rotateY定義沿著Y軸的轉換*/
+	-webkit-transform: rotateY(90deg) translateZ(135px);
+	transform: rotateY(90deg) translateZ(135px);	
+}
+.boxBig .four{
+/*rotateY定義沿著Y軸的轉換*/
+	-webkit-transform: rotateY(180deg) translateZ(135px);
+	transform: rotateY(180deg) translateZ(135px);	
+}
+.boxBig .five{
+/*rotateY定義沿著Y軸的轉換*/
+	-webkit-transform: rotateY(270deg) translateZ(135px);
+	transform: rotateY(270deg) translateZ(135px);	
+}
+.boxBig .six{
+/*rotateX定義沿著X軸的轉換*/
+	-webkit-transform: rotateX(-90deg) translateZ(135px);
+	transform: rotateX(-90deg) translateZ(135px);	
+}
+}
