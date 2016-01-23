@@ -35,11 +35,12 @@
 			});
 
 			$("#menu li#showImg").click(function(){
+				$("#jumpImageS div").text("");
 				$.each(Images, function(i, data){
 					$("<img/>",{
 						"src": data,
 						"alt": "圖片全開!"
-					}).appendTo('#jumpImageS');
+					}).appendTo('#jumpImageS div');
 				});
 				$("#jumpImageS").fadeIn(500);
 			});
@@ -162,6 +163,7 @@
 				].join("");	
 
 				$("#main").text(" "); 
+				Images.length = 0;
 
 				$.get(kurl, function(data){
 					var komicaXML = data.documentElement.getElementsByTagName("body")[0].getElementsByTagName("form")[1].getElementsByTagName("div")[0].getElementsByTagName("div");
@@ -322,6 +324,7 @@
 
 		<div id="jumpImageS">
 			<button class="btn btn-block btn-danger glyphicon glyphicon-remove"></button>
+			<div></div>
 		</div>
 
 	</body>
