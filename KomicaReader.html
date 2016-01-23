@@ -92,10 +92,10 @@
 
 		    $("#downBtn").click(function(){
 		    	var bottomTop = $("html").height() - $(window).height();
-		    	$("html, body").animate({"scrollTop":bottomTop}, 800);
+		    	$("html, body").stop(true,true).animate({"scrollTop":bottomTop}, 800);
 		    });
 		    $("#upBtn").click(function(){
-		    	$("html, body").animate({"scrollTop":0}, 800);
+		    	$("html, body").stop(true,true).animate({"scrollTop":0}, 800);
 		    });
 		    $(window).scroll(function() {
 		    	var BottomH = $("html").height() - $(window).height();
@@ -281,7 +281,6 @@
 
 				var x=0;
 				while(x<2){
-					console.log(URL);
 					var listURL = [
 				    	"http://query.yahooapis.com/v1/public/yql",
 				        "?q=" + encodeURIComponent("select * from html where url='" + URL + "'"),
