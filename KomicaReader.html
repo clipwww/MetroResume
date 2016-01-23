@@ -10,6 +10,7 @@
 		<link href="image/favicon.ico" rel="icon">
 		<link href="css/reset.css" rel="stylesheet"> <!--ResetCSS-->	
 		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/Animate.css" rel="stylesheet">
 		<link id="myCss" href="css/komicaReader2.css" rel="stylesheet"><!--自己寫的css要最後一個讀取-->
 		<script src="js/jquery-2.2.0.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
@@ -36,17 +37,18 @@
 
 			$("#menu li#showImg").click(function(){
 				$("#jumpImageS div").text("");
-				$.each(Images, function(i, data){
+				$.each(ImagesS, function(i, data){
 					$("<img/>",{
 						"src": data,
-						"alt": "圖片全開!"
+						"alt": ImagesB[i]
 					}).appendTo('#jumpImageS div');
 				});
 				$("#jumpImageS").fadeIn(500);
+				$("html, body").animate({"scrollTop":"0px"}, 500);
 			});
 			$("#jumpImageS").on({
 				click: function(){
-					var imgSrc = $(this).attr("src");
+					var imgSrc = $(this).attr("alt");
 		    		$("#jumpImage img").attr("src",imgSrc);
 		    		$("#jumpImage").fadeIn(500);
 				}
@@ -73,7 +75,7 @@
 		    		$(this).css("border-color","white");
 		    	},
 		    	click: function(){
-		    		var imgSrc = $(this).attr("src");
+		    		var imgSrc = $(this).parent("a").attr("href");
 		    		$("#jumpImage img").attr("src",imgSrc);
 		    		$("#jumpImage").fadeIn(500);
 		    		return false;
@@ -87,6 +89,31 @@
 		    $("#main").on({
 		    	click: readList
 		    }, "#listLink");
+
+		    $("#downBtn").click(function(){
+		    	var bottomTop = $("html").height() - $(window).height();
+		    	$("html, body").animate({"scrollTop":bottomTop}, 800);
+		    });
+		    $("#upBtn").click(function(){
+		    	$("html, body").animate({"scrollTop":0}, 800);
+		    });
+		    $(window).scroll(function() {
+		    	var BottomH = $("html").height() - $(window).height();
+		    	if( $(window).scrollTop() === BottomH ){
+		    		$("#downBtn").addClass("flipOutX").fadeOut(500,function(){
+		    			$(this).removeClass("flipOutX");
+		    		});
+		    	}else{
+		    		$("#downBtn").show();
+		    	}
+		    	if( $(window).scrollTop() !== 0 ){
+		    		$("#upBtn").show();
+		    	}else{
+		    		$("#upBtn").addClass("bounceOutRight").fadeOut(500,function(){
+		    			$(this).removeClass("bounceOutRight");
+		    		});
+		    	}
+		    });
 
 
 			function readKanban(){
@@ -146,7 +173,8 @@
 			}//end function
 
 			var kurl;
-			var Images = new Array();
+			var ImagesB = new Array();
+			var ImagesS = new Array();
 		    function readCommand(){	
 		    	var contents = new Array();
 	    		var URL = $(this).parent("a").attr("href");
@@ -163,7 +191,8 @@
 				].join("");	
 
 				$("#main").text(" "); 
-				Images.length = 0;
+				ImagesB.length = 0;
+				ImagesS.length = 0;
 
 				$.get(kurl, function(data){
 					var komicaXML = data.documentElement.getElementsByTagName("body")[0].getElementsByTagName("form")[1].getElementsByTagName("div")[0].getElementsByTagName("div");
@@ -212,10 +241,22 @@
 				       		komicaHTML += " " + title +"</p>";
 
 				       		if( Array.isArray(upo.a) ){
-					        	var imgHref = upo.a[1].href;
-				        		komicaHTML += "<a href=\""+imgHref+"\">";
-				       			komicaHTML += "<img src='"+imgHref+"' alt=\"komicaimg\" /></a>";
-				       			Images.push(imgHref);
+					        	var imgHrefB = upo.a[1].href;
+
+				       			if( imgHrefB.indexOf(".gif") !== -1 ){
+				       				imgHrefS = imgHrefB;//代表為gif
+				       			}else{
+				       				imgHrefS = imgHrefB.replace("src","thumb");
+				       				imgHrefS = imgHrefS.replace(".jpg","s.jpg");
+				       				imgHrefS = imgHrefS.replace(".png","s.jpg");
+				       			}
+
+				        		komicaHTML += "<a href=\""+imgHrefB+"\">";
+				       			komicaHTML += "<img src='"+imgHrefS+"' alt=\"komicaimg\" /></a>";
+
+				       			ImagesB.push(imgHrefB);
+				       			ImagesS.push(imgHrefS);
+
 					        }// end if
 
 					        komicaHTML += "<p class=\"content\">" + contents[i] + "</p>";
@@ -295,13 +336,13 @@
 	<body>
 		<span id="menuIcon" class="glyphicon glyphicon-menu-hamburger"></span>
 		<div id="menu">
-			<img src="image/komicaLogo.jpg" alt="Komica" />
+			<a href="KomicaReader.html" ><img src="image/komicaLogo.jpg" alt="Komica" /></a>
 			<ul>
 				<li name="http://2cat.or.tl/~tedc21thc/new/rss.xml">新番捏他</li>
 				<li name="http://2cat.or.tl/~tedc21thc/live/rss.xml">新番實況</li>
 				<!-- <li name="http://2cat.twbbs.org/~tedc21thc/anime/rss.xml">動畫</li> -->
+				<li id="showImg" ><hr/><span class="glyphicon glyphicon-picture"></span><br/>顯示本串全部圖片</li>		
 				<li id="change"><hr/><span class="glyphicon glyphicon-repeat"></span> 更換配色風格</li>
-				<li id="showImg" ><hr/><span class="glyphicon glyphicon-picture"></span><br/>顯示本串全部圖片</li>
 				<li id="close" ><hr/><span class="glyphicon glyphicon-remove"></span><br/>收起來</li>
 			</ul>
 		</div>
@@ -326,6 +367,9 @@
 			<button class="btn btn-block btn-danger glyphicon glyphicon-remove"></button>
 			<div></div>
 		</div>
+
+		<img id="downBtn" class="animated flipInY" src="image/bottom-button.png" alt="電梯往下"/>
+		<img id="upBtn" class="animated bounceInRight" src="image/top-button.png" alt="電梯往上"/>
 
 	</body>
 </html>

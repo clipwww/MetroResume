@@ -92,11 +92,12 @@ p.content{
 }
 .miniBox img{
 	border:1px solid white;
-	width:40%;
+	max-width: 300px;
 }
 #jumpImage{
 	position: fixed;
 	top:0;
+	padding-top:30px;
 	text-align: center;
 	width:100vw;
 	height: 100vh;
@@ -105,13 +106,13 @@ p.content{
 	z-index: 99999;
 }
 #jumpImage img{
-	max-height:90%;
+	max-height:95%;
 	max-width:100vw;
-	margin-top:50px;
 }
 #jumpImageS{
 	position: absolute;
 	top:0;
+	padding-top:50px;
 	text-align: center;
 	min-width:100vw;
 	min-height: 100vh;
@@ -120,26 +121,49 @@ p.content{
 	z-index: 99998;
 }
 #jumpImageS img{
-	max-width:150px;
+	max-width: 150px;
 	margin:10px 5px 5px 5px;
-	padding-top:50px;
 	cursor:pointer;
 }
 #jumpImageS button{
 	position: fixed;
 	top:0;
 }
-
 button#listLink{
 	font-weight: bold;
 	font-size: 24px;
 	border-radius: 0;
 }
+#downBtn{
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	max-width:75px;
+	cursor:pointer;
+	opacity: 0.5;
+	display: none;
+	border:3px solid white;
+	border-radius: 50%;
+}
+#downBtn:hover{
+	opacity: 1;
+}
+#upBtn{
+	position: fixed;
+	right: 20px;
+	bottom: 95px;
+	max-width:75px;
+	cursor:pointer;
+	opacity: 0.5;
+	display: none;
+	border:3px solid white;
+	border-radius: 50%;
+}
+#upBtn:hover{
+	opacity: 1;
+}
 
 @media (max-width: 500px){
-	#backg{
-		opacity:0;
-	}
 	header{
 		font-size: 16px;
 		padding-top:10px;
