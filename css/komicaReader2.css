@@ -120,7 +120,12 @@ p.content{
 #jumpImageS img{
 	max-width:150px;
 	margin:10px 5px 5px 5px;
+	padding-top:50px;
 	cursor:pointer;
+}
+#jumpImageS button{
+	position: fixed;
+	top:0;
 }
 button#listLink{
 	font-weight: bold;
