@@ -16,7 +16,6 @@
 		<script src="js/bootstrap.min.js"></script>
 		<script>
 		$(function(){
-
 			$("#menuIcon").click(function(){
 				$("#menu").animate({"left":"0px"}, 500);			
 			});
@@ -271,6 +270,7 @@
 
 					        }// end if
 
+					        komicaHTML += "<div class=\"reqComm\" name=\"r"+ id +"\"></div>";
 					        komicaHTML += "<p class=\"content\">" + contents[i] + "</p>";
 				       		komicaHTML += "</div>";		        
 
@@ -293,6 +293,7 @@
 				$("#main").text(" "); 
 
 				var x=0;
+				var page=1;
 				while(x<2){
 					var listURL = [
 				    	"http://query.yahooapis.com/v1/public/yql",
@@ -304,9 +305,12 @@
 					var kanBanUrl = URL.substring(0, n);
 
 					$.getJSON(listURL, function(data){
+
+					$("#main").append("<p style=\"border-bottom:2px solid white;margin-top:30px\">第"+page+"頁</p>");
+
+						page++;
 						var list = data.query.results.body.div[1].form.table.tbody;
 						var listHTML = " ";
-
 						$.each(list.tr, function(i, data){
 							if(i){
 								var listTitle = data.td[2].a.content;
@@ -314,33 +318,53 @@
 								var reNum = data.td[4];
 
 								listHTML += "<div class=\"col-sm-3\">";
-								listHTML += "<a class=\"noneAtag\" href='"+ kanBanUrl + listHref +"'><div class=\"box\">";
+								listHTML += "<a class=\"noneAtag\" href='"+kanBanUrl + listHref+"'><div class=\"box\">";
 								listHTML += "<p class=\"content\">"+ listTitle + "</p><hr/>回應數："+ reNum;
 								listHTML += "</div></a></div>";
+
 							}//end if
 							if( i % 4 === 0 && i !== 0 ){
 								$("<div/>",{
-			        				"class":"row"
-			        			}).appendTo("#main").append(listHTML);
+									"class":"row"
+								}).appendTo("#main").append(listHTML);
 								listHTML = " ";
 							}//end if
 						});//end each
 							$("<div/>",{
-		        				"class":"row"
-		        			}).appendTo("#main").append(listHTML);
+								"class":"row"
+							}).appendTo("#main").append(listHTML);
 							listHTML = " ";
+						URL = URL.replace("page=0","page=1");
 					}); //end getJSON
-					URL = URL.replace("page=0","page=1");
-
 					x++;
 				}//end while
-			}//end function    
-		});//end read
+			}//end function 
+
+			$("#main").on({
+		    	mouseenter: function(){
+		    		var $rComm = $(this).parent().parent().siblings('.reqComm');
+		    		var id = $(this).attr("href");
+		    		var $id = $(id).children('span').children('span');
+		    		$rComm.text("");
+		    		$rComm.append($id.find("a[href*=\"http\"]").clone());
+		    		$rComm.append($id.find("reqComm").clone());
+			    	$rComm.append($id.find("p.content").clone());
+		    		$rComm.append( "<hr/>島民 No."+id.replace("#r","") );
+		    		$rComm.append(" <button class=\"btn btn-xs btn-danger\">Close</button>").slideDown(500);
+		    	}
+		    }, "span.resquote a");
+		    $("#main").on({
+		    	click: function(){
+		    		$(this).parent(".reqComm").slideUp(500);
+		    	}
+		    }, ".reqComm button");
+
+		});//end ready
 
 		function replyhl(id){
-			$("#r"+id).css("background-color","rgba(187,209,233,0.5)")
-			$("#r"+id).siblings().css("background-color","")
-		}	
+			$("#r"+id).css("border","2px solid #f00");
+			$("#r"+id).siblings().css("border","");
+		};
 
 		</script>
 	</head>
