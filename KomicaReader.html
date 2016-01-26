@@ -128,30 +128,20 @@
 		    	});
 		    });
 
-		    $("#main").on({
-		    	mouseenter: function(e){
-		    		var id = $(this).attr("href");
-		    		$('.reqComm').css({
-		    			"top": e.screenY - 200,
-		    			"left":e.screenX + 50
-		    		});
-		    		$('.reqComm').stop(true,true).html( $(id).html() ).fadeIn(500);
-		    	},
-		    	mouseleave: function(){
-		    		$(".reqComm").fadeOut(500);
-		    	}
-		    }, "span.resquote a");
-		    $('.reqComm').on({
-		    	click: function(){
-		    		var imgSrc = $(this).parent("a").attr("href");
-		    		$("#jumpImage img").attr("src",imgSrc);
-		    		$("#jumpImage").fadeIn(500);
-		    		$("body").css("overflow","hidden");
-		    		return false;
-		    	}	
-		    }, "img");
-
-
+		    // $("#main").on({
+		    // 	mouseenter: function(e){
+		    // 		var id = $(this).attr("href");
+		    // 		$('.reqComm').css({
+		    // 			"top": e.screenY - 200,
+		    // 			"left":e.screenX + 50
+		    // 		});
+		    // 		$('.reqComm').stop(true,true).html( $(id).html() ).fadeIn(500);
+		    // 	},
+		    // 	mouseleave: function(){
+		    // 		$(".reqComm").fadeOut(500);
+		    // 	}
+		    // }, "span.resquote a");
+		    
 
 			function readKanban(){
 				// find some demo xml - DuckDuckGo is great for this
@@ -367,16 +357,8 @@
 		});//end ready
 
 		function replyhl(id){
-			event.preventDefault();
-			var ahref = $(this).attr("href");
-			console.log(ahref);
 			$("#r"+id).css("border","2px solid #f00");
 			$("#r"+id).siblings().css("border","");;
-    		$('.reqComm').css({
-    			"top": "50px",
-    			"right":0
-    		});
-    		$('.reqComm').stop(true,true).html( $("#r"+id).html() ).fadeIn(500);
 		};
 
 		</script>
@@ -447,8 +429,8 @@
 			<div></div>
 		</div>
 
-		<div class="reqComm">
-		</div>
+		<!-- <div class="reqComm">
+		</div> -->
 
 
 		<img id="downBtn" class="animated flipInY" src="image/BottomButton.png" alt="電梯往下"/>

@@ -87,6 +87,7 @@ p.content{
 	text-shadow:1px 1px 5px white;
 }
 .miniBox{
+	overflow: hidden;
 	padding:10px;
 	margin-bottom: 5px;
 	background-color: #BBD1E9;
@@ -165,7 +166,7 @@ button#listLink{
 	text-shadow:1px 1px 0 black;
 	border-radius: 0;
 }
-.reqComm{
+/*.reqComm{
 	position: fixed;
 	padding:10px;
 	max-width:90%;
@@ -181,7 +182,7 @@ button#listLink{
 }
 .reqComm p{
 	font-size:14px;
-}
+}*/
 
 @media (max-width: 500px){
 	header{
