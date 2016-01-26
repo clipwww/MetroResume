@@ -141,6 +141,16 @@
 		    		$(".reqComm").fadeOut(500);
 		    	}
 		    }, "span.resquote a");
+		    $('.reqComm').on({
+		    	click: function(){
+		    		var imgSrc = $(this).parent("a").attr("href");
+		    		$("#jumpImage img").attr("src",imgSrc);
+		    		$("#jumpImage").fadeIn(500);
+		    		$("body").css("overflow","hidden");
+		    		return false;
+		    	}	
+		    }, "img");
+
 
 
 			function readKanban(){
@@ -357,8 +367,16 @@
 		});//end ready
 
 		function replyhl(id){
+			event.preventDefault();
+			var ahref = $(this).attr("href");
+			console.log(ahref);
 			$("#r"+id).css("border","2px solid #f00");
-			$("#r"+id).siblings().css("border","");
+			$("#r"+id).siblings().css("border","");;
+    		$('.reqComm').css({
+    			"top": "50px",
+    			"right":0
+    		});
+    		$('.reqComm').stop(true,true).html( $("#r"+id).html() ).fadeIn(500);
 		};
 
 		</script>

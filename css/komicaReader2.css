@@ -69,6 +69,7 @@ a.noneAtag{
 	color:maroon;
 }
 .box{
+	overflow: hidden;
 	font-size: 18px;
 	font-weight: bold;
 	margin-top:20px;
@@ -177,6 +178,9 @@ button#listLink{
 }
 .reqComm span{
 	font-size:10px;
+}
+.reqComm p{
+	font-size:14px;
 }
 
 @media (max-width: 500px){
