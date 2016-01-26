@@ -128,6 +128,21 @@
 		    	});
 		    });
 
+		    $("#main").on({
+		    	mouseenter: function(e){
+		    		var id = $(this).attr("href");
+		    		$('.reqComm').css({
+		    			"top": e.screenY - 200,
+		    			"left":e.screenX + 50
+		    		});
+		    		$('.reqComm').stop(true,true).html( $(id).html() ).fadeIn(500);
+		    	},
+		    	mouseleave: function(){
+		    		$(".reqComm").fadeOut(500);
+		    	}
+		    }, "span.resquote a");
+
+
 			function readKanban(){
 				// find some demo xml - DuckDuckGo is great for this
 				var URL = $(this).attr("name");
@@ -270,7 +285,6 @@
 
 					        }// end if
 
-					        komicaHTML += "<div class=\"reqComm\" name=\"r"+ id +"\"></div>";
 					        komicaHTML += "<p class=\"content\">" + contents[i] + "</p>";
 				       		komicaHTML += "</div>";		        
 
@@ -339,25 +353,6 @@
 					x++;
 				}//end while
 			}//end function 
-
-			$("#main").on({
-		    	mouseenter: function(){
-		    		var $rComm = $(this).parent().parent().siblings('.reqComm');
-		    		var id = $(this).attr("href");
-		    		var $id = $(id).children('span').children('span');
-		    		$rComm.text("");
-		    		$rComm.append($id.find("a[href*=\"http\"]").clone());
-		    		$rComm.append($id.find("reqComm").clone());
-			    	$rComm.append($id.find("p.content").clone());
-		    		$rComm.append( "<hr/>島民 No."+id.replace("#r","") );
-		    		$rComm.append(" <button class=\"btn btn-xs btn-danger\">Close</button>").slideDown(500);
-		    	}
-		    }, "span.resquote a");
-		    $("#main").on({
-		    	click: function(){
-		    		$(this).parent(".reqComm").slideUp(500);
-		    	}
-		    }, ".reqComm button");
 
 		});//end ready
 
@@ -433,6 +428,10 @@
 			</button>
 			<div></div>
 		</div>
+
+		<div class="reqComm">
+		</div>
+
 
 		<img id="downBtn" class="animated flipInY" src="image/BottomButton.png" alt="電梯往下"/>
 		<img id="upBtn" class="animated bounceInRight" src="image/TopButton.png" alt="電梯往上"/>
