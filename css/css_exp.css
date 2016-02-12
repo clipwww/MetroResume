@@ -1,0 +1,106 @@
+body{
+	padding:30px;
+}
+.ch1_button{
+	padding: .3em .8em;
+	border:1px solid rgba(0,0,0,.1);
+	background: black linear-gradient(hsla(0,0%,100%,.2), transparent);
+	/*使用linear-gradient線性漸層，弄出半透明的白色(淺色)或黑色(深色)覆蓋在主色上面*/
+	border-radius:.2em;
+	color: white;
+	text-shadow: 0 -.05em .05em black;
+	font-size: 125%;
+	line-height: 1.5;
+}
+.ch1_button.cancel{
+	background-color: #c00;
+}
+.ch1_button.ok{
+	background-color: #6b0;
+}
+hr{
+	height:  .1em;
+	background: currentColor;
+	/*currentColor自動取得文字的顏色*/
+}
+.callout{
+	position: relative;
+	background: rebeccapurple;
+	padding: .7em;
+	border: .5em;
+}
+.callout:after{
+	content:"";
+	position:absolute;
+	top:-.3em;
+	left:1em;
+	padding:.35em;
+	background: inherit;
+	border: inherit;
+	border-right:0;
+	border-bottom:0;
+	transform: rotate(45deg); 
+}
+.translucent-border{
+	border:10px solid hsla(0,0%,0%,.5);
+	background: black;
+	background-clip: padding-box;
+	/*background-clip預設為border-box，代表背景會延伸到邊框下方*/
+	/*改為padding-box則只會涵蓋所有padding的範圍*/
+	color:white;
+	padding:10px;
+}
+.mutiple-borders{
+	background-color: yellowgreen;
+	box-shadow: 0 0 0 5px #655,
+				0 0 0 10px deeppink,
+				0 0 0 15px #7FC9FF,
+				0 2px 5px 15px rgba(0,0,0,.6);
+	/*用陰影的第4個參數（擴散半徑）製作出類似外邊框，因為是疊加的，越外面其擴散半徑要越大
+	陰影製作的邊框不會影響到版型，也捕捉不到滑鼠事件，可以使用inset內陰影+內距邊界來模擬會佔據空間的邊框*/
+	padding:10px;
+	margin:20px;
+}
+.mutiple-borders-dashed{
+	background-color:black;
+	border:10px solid #655;
+	outline: 1px dashed white;
+	outline-offset:-15px;
+	/*如果只需要兩個邊框，可以使用outline，它會在border的外圍
+	可以使用outline-offset給予負值讓它成為內框*/
+	padding:20px;
+	color:white;
+}
+.extended-bg{
+	background:	url("../image/hjs93j06.png") 
+				no-repeat bottom right #7FFF8E;
+	background-size: 10%;
+	background-position: right 20px bottom 10px;
+	/*使用background-position可以調整背景圖片的位置
+	為了防止瀏覽器不支援background-position，可以在background加入bottom right確保至少背景圖片會在右下角*/
+	padding:50px;
+}
+.bg-origin{
+	background:	url("../image/hjs93j06.png") 
+				no-repeat bottom right #FFE97F;
+	background-size: 15%;
+	background-origin: content-box;
+	/*background-origin的預設值是padding-box，代表的是背景圖片涵蓋整個padding區塊
+	改為content-box則只會涵蓋到content區塊，也因此會跟著被padding屬性壓縮*/
+	padding:50px;
+}
+.bg-calc{
+	background:	url("../image/hjs93j06.png") 
+				no-repeat bottom right #7FFFFF;
+	background-size: 15%;
+	background-position: calc(100% - 50px) calc(100% - 5px);
+	padding:50px;	
+}
+.inner-rounding{
+	background: tan;
+	border-radius: 1em;
+	padding: 50px;
+	box-shadow: 0 0 0 .4em #655;
+	outline: 1em solid #655;
+	margin:20px;
+}
