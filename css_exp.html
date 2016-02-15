@@ -8,6 +8,15 @@
 		<title>CSS Experiment</title>
 		<link href="css/reset.css" rel="stylesheet">
 		<link href="css/css_exp.css" rel="stylesheet">
+		<script src="js/jquery-2.2.0.min.js"></script>
+		<script>
+		$(function(){
+			$(".pie").each(function(){
+				var p = parseFloat($(this).text());
+				$(this).css("animation-delay",'-'+p+'s');
+			})
+		})
+		</script>
 	</head>
 	<body>
 		<div class="myContainer">
@@ -40,7 +49,7 @@
 			<div class="vintage-envelope">【復古信封模擬】</div>
 			<div class="marching-ants">【像螞蟻行軍的虛線邊框】</div>
 
-			<br/><br/><h2>Chapter 3</h2><hr/>
+			<br/><br/><h2>Chapter 3：形狀</h2><hr/>
 			<div class="half-ellipse">【彈性的border-radius】</div>
 			<a href="#" class="parallelograms">【平行</a>
 			<a href="#" class="parallelograms">四邊形】</a>
@@ -50,6 +59,29 @@
 			<div class="bevel-corners-gradients">【剪角】</div>
 			<div class="scoop-corners">【內圓角】</div>
 			<div class="bevel-corners-clipped">【剪角-clip path方法】</div>
+			<nav>
+				<a href="#">Home</a>
+				<a href="#" class="selected">Projects</a>
+				<a href="#">Test</a>
+				<a href="#">About</a>
+			</nav>
+			<main>Content area</main>
+			<div class="pie">10%</div>
+			<div class="pie">50%</div>
+			<div class="pie">70%</div>
+			<div class="pie">99.5%</div><br/><br/>
+			<svg class="svg-pie" width="100" height="100">
+				<circle r="25" cx="50" cy="50">
+			</svg>
+
+			<br/><br/><h2>Chapter 4：視覺效果</h2><hr/>
+			<div class="shadow-one-side">【單邊陰影】</div>
+			<div class="shadow-two-side">【相鄰雙邊陰影】</div>
+			<div class="shadow-opposite-side">【相鄰雙邊陰影】</div>
+			<div class="dotted">【特殊陰影】</div>
+			<img class="color-tint-filter" src="image/pepe.jpg" alt="pepe">sepia濾鏡
+			<div class="tinted-image"></div>
+			<div class="frosted-glass"><p>【毛玻璃效果】</p></div>
 		</div>
 	</body>
 </html>
