@@ -15,6 +15,19 @@
 				var p = parseFloat($(this).text());
 				$(this).css("animation-delay",'-'+p+'s');
 			})
+
+			$(".hta-area").click(function(){
+				alert("YO");
+			})
+
+			$("#deemphasizing").click(function(){
+				$(".myContainer").addClass("de-emphasized");
+				$(".dialog").addClass("open");
+			})
+			$(".dialog").click(function(){
+				$(".myContainer").removeClass("de-emphasized");
+				$(".dialog").removeClass("open");
+			})
 		})
 		</script>
 	</head>
@@ -115,6 +128,30 @@ var d = new Date();
 					</testpath></text>
 				</svg>
 			</div>
+
+			<br/><br/><h2>Chapter 6：使用者體驗</h2><hr/>
+			<div class="hta-area"></div><br/><br/>
+			<input type="checkbox" id="awesome" />
+			<label for="awesome">Awesome!</label>
+			<br/><br/><button id="deemphasizing">【透過模糊降低吸引力】</button>
+			<br/><br/><div style="background:white">
+				<p>【滾動提示】</p>
+				<ul class="scrolling-hints">
+					<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
+					<li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li>
+					<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
+					<li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li>
+					<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
+					<li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li>
+				</ul>
+			</div>
+			<div class="image-slider">
+				<div>
+					<img src="image/pepe.jpg" alt="Before"/>
+				</div>
+				<img src="image/pepe2.jpg" alt="After"/>
+			</div>
 		</div>
+		<div class="dialog">點我關閉</div>
 	</body>
 </html>

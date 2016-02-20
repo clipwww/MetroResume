@@ -520,3 +520,104 @@ dd + dd::before{
 @keyframes turnCir{
 	to{ transform: rotate(-1turn);}
 }
+.hta-area{
+	position: relative;
+	width:100px;
+	height: 100px;
+	background-color: #58a;
+	border-radius: 50%;
+	cursor: pointer;
+}
+.hta-area::before{
+	content: "";
+	position: absolute;
+	top:-20px;
+	right:-20px;
+	bottom:-20px;
+	left:-20px;
+}
+input[type="checkbox"]{
+	position: absolute;
+	clip:rect(0,0,0,0);
+}
+input[type="checkbox"] + label::before{
+	content:"\a0";
+	display: inline-block;
+	vertical-align: center;
+	width: .8em;
+	height: .8em;
+	margin-right: .2em;
+	border-radius: .2em;
+	background: silver;
+}
+input[type="checkbox"]:checked + label::before{
+	content: "\2713";
+	background: yellowgreen;
+}
+input[type="checkbox"]:focus + label::before{
+	box-shadow:0 0 .1em .1em #58a;
+}
+.de-emphasized{
+	-webkit-filter: blur(3px);
+	filter: blur(3px);
+}
+.dialog{
+	position: fixed;
+	top: 50%; left: 50%;
+	background: white;
+	z-index: 1;
+	width: 10em;
+	padding: 2em;
+	margin: -5em;
+	border: 1px solid silver;
+	border-radius: .5em;
+	box-shadow: 0 .2em .5em rgba(0,0,0,.5),
+	            0 0 0 100vmax rgba(0,0,0,.5);
+	display: none;
+}
+.dialog.open{
+	display: block;
+}
+.scrolling-hints{
+	overflow: auto;
+	width: 10em;
+	height: 8em;
+	padding: .3em .5em;
+	border:1px solid silver;
+	background: linear-gradient(white 15px, hsla(0,0%,100%,0)) 0 0 / 100% 50px,
+				radial-gradient(at top, rgba(0,0,0,.3), transparent 70%) 0 0 / 100% 15px,
+				linear-gradient(to top, white 15px, hsla(0,0%,100%,0)) bottom / 100% 50px,
+				radial-gradient(at bottom, rgba(0,0,0,.3), transparent 70%) bottom / 100% 15px;
+	background-repeat: no-repeat;
+	background-attachment: local, scroll, local, scroll;
+}
+.image-slider{
+	position: relative;
+	display: inline-block;
+	margin: 20px;
+	width: 250px;
+}
+.image-slider > div {
+	position:  absolute;
+	top: 0; bottom: 0; left: 0;
+	border-right: 5px solid white;
+	width:25%;
+	max-width: 100%;
+	overflow: hidden;
+	resize: horizontal;
+}
+.image-slider img{
+	display: block;
+	width: 250px;
+}
+.image-slider > div::before{
+	content:"";
+	position: absolute;
+	bottom:0; right:0;
+	width: 12px;
+	height: 12px;
+	padding: 5px;
+	background: linear-gradient(-45deg, white 50%, transparent 0);
+	background-clip: content-box;
+	cursor: ew-resize;
+}
